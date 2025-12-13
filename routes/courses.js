@@ -1,5 +1,4 @@
-const {Router} = requier("express");
-
+const {Router} = require("express");
 const courseRouter = Router();
 
 
@@ -18,5 +17,5 @@ const courseRouter = Router();
     })
 
 module.exports = {
-    courseRoutes : courseRoutes
+    courseRouter : courseRouter
 }
