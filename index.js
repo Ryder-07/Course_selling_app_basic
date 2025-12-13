@@ -6,6 +6,7 @@ const app = express();
 
 
 app.use("/user",userRouter);
+app.use("/admin",adminRouter);
 app.use("/course",courseRouter); 
 
 
