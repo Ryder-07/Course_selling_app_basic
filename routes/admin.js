@@ -1,9 +1,9 @@
 const { Router } = require("express");
-const userRouter = Router();
+const adminRouter = Router();
 
 
 
-adminRouter.use(adminMiddleware);
+// adminRouter.use(adminMiddleware);
 
 
     adminRouter.post("/signup", function(req,res){
