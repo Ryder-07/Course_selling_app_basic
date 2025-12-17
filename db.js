@@ -2,9 +2,7 @@
  require("dotenv").config();
 
 
- mongoose.connect(process.env.CONNECTION_STRING)
-   .then(() => console.log("🔥 Mongo Connected Successfully"))
-   .catch((e) => console.log("❌ Mongo Connection Error:", e));
+
 
 
  const Schema = mongoose.Schema;
