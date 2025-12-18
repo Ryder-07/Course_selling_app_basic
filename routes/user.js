@@ -10,7 +10,7 @@ const userRouter = Router();
         // TODO: put inside a try catch block
         await userModel.create({
             email,
-            passowrd,
+            password,
             firstname,
             lastName
         })
