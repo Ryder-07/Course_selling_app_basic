@@ -127,17 +127,37 @@ adminRouter.post("/course",adminMiddleware,async function(req,res){
 })
 
 
-    adminRouter.put("/course",adminMiddleware, function(req,res){
-        res.json({
-            message: "signin endpoint"
-        })
+    adminRouter.put("/course",adminMiddleware,async function(req,res){
+    const adminId = req.userId;
+    const {title , description, imageUrl, price, courseId} = req.body;
+    //creating a web3 saas in 6 hours to understand that rather than  a url user gives the image itself
+    const course = await courseModel.updateOne({
+        _id: courseId,
+        creatorId: adminId 
+    },{
+        title,
+        description,
+        imageUrl,
+        price
+    })
+
+    res.json({
+        message: "course upd ated",
+        courseId: course._id 
+    })
     })
 
 
-    adminRouter.get("/course/bulk",adminMiddleware, function(req,res){
-        res.json({
-            message: "signin endpoint"
-        })
+    adminRouter.get("/course/bulk",adminMiddleware,async function(req,res){
+        const adminId = req.userId;
+    const courses = await courseModel.findOne({
+        creatorId: adminId 
+    });
+
+    res.json({
+        message: "course Found",
+        courses
+    })
     })
 
 
