@@ -1,11 +1,12 @@
 const { Router } = require("express");
-const {adminModel} = require("../db");
+const {adminModel, courseModel} = require("../db");
 const adminRouter = Router();
 const bcrypt = require("bcrypt");
 const {z} = require("zod");
 
 const jwt = require("jsonwebtoken");
 const {JWT_ADMIN_PASSWORD} = require("../config");
+const { adminMiddleware } = require("../middleware/admin");
 
 
 
@@ -60,12 +61,6 @@ const signupSchema = z.object({
 
 
 
-
-
-
-
-
-
 adminRouter.post("/signin",async function(req,res){
         try {
         const { email, password } = req.body;
@@ -113,15 +108,23 @@ adminRouter.post("/signin",async function(req,res){
 
 
 
-
-
-
-
-    adminRouter.post("/course", function(req,res){
-        res.json({
-            message: "signin endpoint"
-        })
+adminRouter.post("/course",adminMiddleware,async function(req,res){
+    const adminId = req.userId;
+    const {title , description, imageUrl, price} = req.body;
+    //creating a web3 saas in 6 hours to understand that rather than  a url user gives the image itself
+    const course = await courseModel.create({
+        title,
+        description,
+        imageUrl,
+        price,
+        creatorId: adminId
     })
+
+    res.json({
+        message: "course created",
+        courseId: course._id 
+    })
+})
 
 
     adminRouter.put("/course", function(req,res){
