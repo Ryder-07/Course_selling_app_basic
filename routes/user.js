@@ -52,7 +52,8 @@ userRouter.post("/signup",async function(req,res){
     res.status(500).json({
         message: "user already exists or something went wrong"
     });
-}});
+}
+});
 
 
     userRouter.post("/signin", async function (req, res) {
