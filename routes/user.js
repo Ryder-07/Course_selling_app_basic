@@ -5,7 +5,7 @@ const userRouter = Router();
 const {z} = require("zod");
 
 const jwt = require("jsonwebtoken");
-const JWT_USER_PASSWORD= "ksajdfl";
+
 
 
 

@@ -1,6 +1,11 @@
 const { Router } = require("express");
 const {adminModel} = require("../db");
 const adminRouter = Router();
+const bcrypt = require("bcrypt");
+const {z} = require("zod");
+
+const jwt = require("jsonwebtoken");
+
 
 
 
@@ -37,7 +42,7 @@ const signupSchema = z.object({
 
         
         // TODO: put inside a try catch block
-    await userModel.create({
+    await adminModel.create({
        email,
        password: hashedPassword,
        firstName,
@@ -48,7 +53,7 @@ const signupSchema = z.object({
     });
 }catch(err){
     res.status(500).json({
-        message: "user already exists or something went wrong"
+        message: "admin already exists or something went wrong"
     });
 }});
 
@@ -64,10 +69,10 @@ adminRouter.post("/signin",async function(req,res){
         try {
         const { email, password } = req.body;
 
-        // 1️⃣ Find user by email
-        const user = await adminModel.findOne({ email });
+        // 1️⃣ Find admin by email
+        const admin = await adminModel.findOne({ email });
 
-        if (!user) {
+        if (!admin) {
             return res.status(403).json({
                 message: "Incorrect credentials"
             });
@@ -76,7 +81,7 @@ adminRouter.post("/signin",async function(req,res){
         // 2️⃣ Compare password
         const isPasswordCorrect = await bcrypt.compare(
             password,
-            user.password
+            admin.password
         );
 
         if (!isPasswordCorrect) {
@@ -87,8 +92,8 @@ adminRouter.post("/signin",async function(req,res){
 
         // 3️⃣ Generate JWT
         const token = jwt.sign(
-            { id: user._id },
-            JWT_USER_PASSWORD
+            { id: admin._id },
+            JWT_ADMIN_PASSWORD
         );
 
         // 4️⃣ Send token
