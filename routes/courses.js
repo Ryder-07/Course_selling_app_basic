@@ -30,5 +30,5 @@ const { $ZodAsyncError } = require("zod/v4/core");
     })
 
 module.exports = {
-    courseRouter : courseRouter
+    courseRouter : courseRou
 }
